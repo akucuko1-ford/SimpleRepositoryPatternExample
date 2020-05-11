@@ -1,0 +1,4 @@
+rootProject.name='SimpleRepositoryPatternExample'
+include ':app', ':lib-smartrepo'
+
+project(':lib-smartrepo').projectDir = file('libraries/smartrepo')
