@@ -31,6 +31,7 @@ class SmartRepository<T>(private val adapter: Adapter<T>) {
 
     private fun networkApiCall(vin: String, cacheValue: T): Observable<T> =
         adapter.getNetworkData(vin)
+            .subscribeOn(Schedulers.io())
             .doOnNext { adapter.saveToDatabase(it, cacheValue) }
             .onErrorResumeNext { _: Throwable -> Observable.empty() }
             .doFinally { adapter.networkObservablesMap().remove(vin) }
