@@ -7,7 +7,7 @@ import io.reactivex.schedulers.Schedulers
 
 class SmartRepository<T>(private val adapter: Adapter<T>) {
 
-    fun getObservable(vin: String): Observable<T> = adapter.getDatabaseData(vin)
+    fun getObservable(vin: String): Observable<T> = getDbObservable(vin)
         .subscribeOn(Schedulers.io())
         .map { getData(it, vin) }
         .observeOn(Schedulers.single())
@@ -15,6 +15,10 @@ class SmartRepository<T>(private val adapter: Adapter<T>) {
         .observeOn(Schedulers.computation())
         .toObservable()
         .distinctUntilChanged()
+
+    private fun getDbObservable(vin: String) =
+        adapter.memoryObservablesMap()[vin] ?: adapter.getDatabaseData(vin).replay(1).refCount()
+            .apply { adapter.memoryObservablesMap()[vin] = this }
 
     private fun getData(it: List<T>, vin: String) =
         if (it.isEmpty()) adapter.onCreateModelInstance(vin)
@@ -39,5 +43,6 @@ class SmartRepository<T>(private val adapter: Adapter<T>) {
         fun getNetworkData(vin: String): Observable<VH>
         fun saveToDatabase(newData: VH, cachedData: VH)
         fun networkObservablesMap(): MutableMap<String, Observable<VH>>
+        fun memoryObservablesMap(): MutableMap<String, Flowable<List<VH>>>
     }
 }
