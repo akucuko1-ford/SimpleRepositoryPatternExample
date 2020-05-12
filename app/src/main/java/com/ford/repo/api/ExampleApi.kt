@@ -3,11 +3,13 @@ package com.ford.repo.api
 import android.util.Log
 import com.ford.repo.model.ExampleModel
 import io.reactivex.Observable
+import java.util.concurrent.TimeUnit
 
 class ExampleApi {
 
     fun makeNetworkCall(vin: String): Observable<ExampleModel> =
         Observable.just(ExampleModel(vin, data[counter++], System.currentTimeMillis()))
+            .delay(5, TimeUnit.SECONDS)
             .doOnEach { Log.i("ExampleApi", "Network call has been made, value=$it") }
 }
 
