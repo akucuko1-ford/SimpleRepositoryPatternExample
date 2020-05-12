@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,12 +8,60 @@
     tools:context=".MainActivity">
 
     <TextView
+        android:id="@+id/firstSbText"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Hello World!"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        android:layout_margin="30dp"
+        tools:text="Json1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/secondSbText"/>
+
+    <Button
+        android:id="@+id/firstSbButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="FirstSb"
+        app:layout_constraintTop_toBottomOf="@id/firstSbText"
+        app:layout_constraintStart_toStartOf="@id/firstSbText"
+        app:layout_constraintEnd_toEndOf="@id/firstSbText"/>
+
+    <TextView
+        android:id="@+id/secondSbText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        tools:text="Json1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toEndOf="@id/firstSbText"
+        app:layout_constraintEnd_toStartOf="@id/thirdSbText"/>
+
+    <Button
+        android:id="@+id/secondSbButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="SecondSb"
+        app:layout_constraintTop_toBottomOf="@id/secondSbText"
+        app:layout_constraintStart_toStartOf="@id/secondSbText"
+        app:layout_constraintEnd_toEndOf="@id/secondSbText"/>
+
+    <TextView
+        android:id="@+id/thirdSbText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="30dp"
+        tools:text="Json1"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/secondSbText"/>
+
+    <Button
+        android:id="@+id/thirdSbButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="ThirdSb"
+        app:layout_constraintTop_toBottomOf="@id/thirdSbText"
+        app:layout_constraintStart_toStartOf="@id/thirdSbText"
+        app:layout_constraintEnd_toEndOf="@id/thirdSbText"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
