@@ -35,6 +35,7 @@ class SmartRepository<T>(private val adapter: Adapter<T>) {
             .doOnNext { adapter.saveToDatabase(it, cacheValue) }
             .onErrorResumeNext { _: Throwable -> Observable.empty() }
             .doFinally { adapter.networkObservablesMap().remove(vin) }
+            .share()
             .apply { adapter.networkObservablesMap()[vin] = this }
 
     interface Adapter<VH> {
