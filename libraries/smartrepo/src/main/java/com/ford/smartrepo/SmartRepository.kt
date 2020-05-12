@@ -39,12 +39,44 @@ class SmartRepository<T>(private val adapter: Adapter<T>) {
             .apply { adapter.networkObservablesMap()[vin] = this }
 
     interface Adapter<VH> {
+
+        /*
+        * SmartRepository uses this function to create default model in case of database empty
+        * */
         fun onCreateModelInstance(vin: String): VH
+
+        /*
+        * To retrieve data from database which created by the client
+        * */
         fun getDatabaseData(vin: String): Flowable<List<VH>>
+
+        /*
+        * The client should decide whether the cache is valid or not
+        * */
         fun isCacheDataInvalid(data: VH): Boolean
+
+        /*
+        * To retrieve data from api.
+        *
+        * This is necessary if the cache is invalid
+        * */
         fun getNetworkData(vin: String): Observable<VH>
+
+        /*
+        * The client should handle the login for saving the data to database or etc.
+        * */
         fun saveToDatabase(newData: VH, cachedData: VH)
+
+        /*
+        * The client should be able to provide singleton Map to the repository
+        * to keep track the network calls
+        * */
         fun networkObservablesMap(): MutableMap<String, Observable<VH>>
+
+        /*
+        * The client should be able to provide singleton Map to the repository
+        * to keep track database IO operations
+        * */
         fun memoryObservablesMap(): MutableMap<String, Flowable<List<VH>>>
     }
 }
