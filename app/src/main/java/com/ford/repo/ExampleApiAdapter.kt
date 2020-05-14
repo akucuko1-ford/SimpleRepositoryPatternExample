@@ -13,9 +13,6 @@ class ExampleApiAdapter(
     private val dbService: ExampleDbService
 ) : SmartRepository.Adapter<ExampleModel> {
 
-    private val networkMap = mutableMapOf<String, Observable<ExampleModel>>()
-    private val memoryMap = mutableMapOf<String, Flowable<List<ExampleModel>>>()
-
     override fun onCreateModelInstance(vin: String): ExampleModel =
         ExampleModel(vin, "", -1)
 
@@ -36,10 +33,4 @@ class ExampleApiAdapter(
 
     override fun saveToDatabase(newData: ExampleModel, cachedData: ExampleModel) =
         dbService.insertData(newData)
-
-    override fun networkObservablesMap(): MutableMap<String, Observable<ExampleModel>> =
-        networkMap
-
-    override fun memoryObservablesMap(): MutableMap<String, Flowable<List<ExampleModel>>> =
-        memoryMap
 }
