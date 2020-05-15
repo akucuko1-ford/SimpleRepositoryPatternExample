@@ -8,10 +8,11 @@ import com.ford.smartrepo.SmartRepository
 import io.reactivex.Flowable
 import io.reactivex.Observable
 
+@Suppress("PARAMETER_NAME_CHANGED_ON_OVERRIDE")
 class ExampleApiAdapter(
     private val apiService: ExampleApi,
     private val dbService: ExampleDbService
-) : SmartRepository.Adapter<ExampleModel> {
+) : SmartRepository.Adapter<String, ExampleModel> {
 
     override fun onCreateModelInstance(vin: String): ExampleModel =
         ExampleModel(vin, "", -1)
